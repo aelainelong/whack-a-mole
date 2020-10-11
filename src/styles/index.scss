@@ -11,6 +11,7 @@ $stop: #ff847c;
 $reset: #f8d8a0;
 $disabled: #666;
 
+$Roboto: "Roboto", Helvetica, Arial, sans-serif;
 $LilitaOne: "Lilita One", Helvetica, Arial, sans-serif;
 
 $moleImg: url('../img/mole.png');
@@ -39,7 +40,7 @@ body {
     align-items: center;
     padding: 2rem;
     background-color: $secondary;
-    font-family: "Roboto", Helvetica, Arial, sans-serif;
+    font-family: $Roboto;
     font-size: 2rem;
     text-align: center;
     color: $primary;
