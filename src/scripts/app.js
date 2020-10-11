@@ -22,12 +22,12 @@ const app = (function(){
     const minDelay = 500; // min milliseconds to show a mole
     const maxDelay = 1500; // max milliseconds to show a mole
 
-    let currentGame,
+    let currentMoles,
         currentTimer,
         currentHitCounter,
         prevHoleIndex;
 
-    // Game utilities
+    // Game utility methods
 
     function getRandomDelay(min, max){
         return Math.floor(Math.random() * (max - min) + min);
@@ -43,9 +43,34 @@ const app = (function(){
         return holes[newHoleIndex];
     }
 
-    // Game functions
+    function getResults(totalHits, totalMoles) {
+        const score = `You hit ${totalHits} out of ${totalMoles} moles.`;
+        let comment = "";
 
-    function newGame(holes){
+        if (!totalHits) comment = ":( Oops...";
+        if (totalHits && totalHits < totalMoles / 2) comment = "Better luck next time!";
+        if (totalHits > totalMoles / 2 && totalHits < (totalMoles - (totalMoles / 4))) comment = "Not too shabby!";
+        if (totalHits > (totalMoles - (totalMoles / 4))) comment = "Nice job!";
+
+        return `${score}<br/>${comment}`;
+    }
+
+    function setActiveButton(button) {
+        // Clear any existing disabled button states
+        const gameControls = document.querySelectorAll(".controls button");
+        gameControls.forEach(button => {
+            button.removeAttribute("disabled");
+        });
+
+        if (!button) return;
+        if (!button.classList.contains("button--reset")) {
+            button.setAttribute("disabled", true);
+        }
+    }
+
+    // Game objects (would-be classes)
+
+    function newMoles(holes){
         if (!holes) return;
 
         let thisGame = null,
@@ -122,6 +147,7 @@ const app = (function(){
                     // Game Over!
                     running = false;
                     clearInterval(thisTimer);
+                    currentMoles.stop();
                     showEndModal();
                 }
                 timer.textContent = `00:${seconds < 10 ? `0${seconds}` : seconds}`;
@@ -150,7 +176,30 @@ const app = (function(){
         };
     }
 
-    function showMole(hole){
+    // Game events
+
+    function startGame(e){
+        if (currentTimer.isRunning()) return;
+        if (e) setActiveButton(e.target);
+        currentTimer.start();
+        currentMoles.start();
+    }
+
+    function stopGame(e){
+        if (!currentTimer.isRunning()) return;
+        if (e) setActiveButton(e.target);
+        currentTimer.stop();
+        currentMoles.stop();
+    }
+
+    function resetGame(e){
+        if (e) setActiveButton(e.target);
+        currentTimer.reset();
+        currentHitCounter.reset();
+        currentMoles.reset();
+    }
+
+    function showMole(hole) {
         const randomDelay = getRandomDelay(minDelay, maxDelay);
 
         // Add a mole to the hole
@@ -171,25 +220,12 @@ const app = (function(){
         currentHitCounter.hit();
     }
 
-    function getResults(totalHits, totalMoles) {
-        const score = `You hit ${totalHits} out of ${totalMoles} moles.`;
-        let comment = "";
-
-        if (!totalHits) comment = ":( Oops...";
-        if (totalHits && totalHits < totalMoles/2) comment = "Better luck next time!";
-        if (totalHits > totalMoles/2 && totalHits < (totalMoles - (totalMoles/4))) comment = "Not too shabby!";
-        if (totalHits > (totalMoles - (totalMoles/4))) comment = "Nice job!";
-
-        return `${score}<br/>${comment}`;
-    }
-
     function showEndModal() {
         const message = modal.querySelector(".message");
-        
-        currentGame.stop();
+
         document.body.classList.add("body--modal");
         modal.style.display = "block";
-        message.innerHTML = getResults(currentHitCounter.getHits(), currentGame.getMoles());
+        message.innerHTML = getResults(currentHitCounter.getHits(), currentMoles.getMoles());
 
         setTimeout(() => {
             modal.classList.add("modal--open");
@@ -205,42 +241,6 @@ const app = (function(){
             modal.style.display = "none";
             document.body.classList.remove("body--modal");
         }, 500);
-    }
-
-    function setActiveButton(button) {
-        // Clear any existing disabled button states
-        const gameControls = document.querySelectorAll(".controls button");
-        gameControls.forEach(button => {
-            button.removeAttribute("disabled");
-        });
-
-        if (!button) return;
-        if (!button.classList.contains("button--reset")) {
-            button.setAttribute("disabled", true);
-        }
-    }
-
-    // Game controls
-
-    function startGame(e){
-        if (currentTimer.isRunning()) return;
-        if (e) setActiveButton(e.target);
-        currentTimer.start();
-        currentGame.start();
-    }
-
-    function stopGame(e){
-        if (!currentTimer.isRunning()) return;
-        if (e) setActiveButton(e.target);
-        currentTimer.stop();
-        currentGame.stop();
-    }
-
-    function resetGame(e){
-        if (e) setActiveButton(e.target);
-        currentTimer.reset();
-        currentHitCounter.reset();
-        currentGame.reset();
     }
 
     // Game initialization
@@ -285,7 +285,7 @@ const app = (function(){
             }
 
             // Set up the moles, timer and hit counter
-            currentGame = newGame(holes, minDelay, maxDelay);
+            currentMoles = newMoles(holes, minDelay, maxDelay);
             currentTimer = newTimer(timer, maxTime);
             currentHitCounter = newHitCounter(hitCounter, 0);
 
