@@ -129,13 +129,12 @@ button {
 /* Game Holes */
 
 .holes {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 2rem;
-    margin-bottom: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
-    @media (min-width: 460px) {
-        grid-gap: 3rem;
+    @media (min-width: 768px) {
+        margin-bottom: 1rem;
     }
 
     .hole {
@@ -144,13 +143,16 @@ button {
         position: relative;
         overflow: hidden;
         height: 70px;
+        width: 32%;
+        margin-bottom: 2rem;
         background-color: $primary;
         border: 4px solid $primary;
         border-radius: 100%;
         cursor: pointer;
 
-        @media (min-width: 460px) {
+        @media (min-width: 768px) {
             height: 100px;
+            margin-bottom: 3rem;
         }
 
         &:after {
