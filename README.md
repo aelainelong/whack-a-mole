@@ -10,7 +10,7 @@ https://xenodochial-einstein-2b7ca9.netlify.app
 
 ## Setup
 
-To play and tinker locally: Clone this repo and then run the following commands from the project root to fire it up on http://localhost:8080.
+Clone this repo and run the following commands from the project root to fire it up on http://localhost:8080.
 
 ### Installation
 
