@@ -133,9 +133,9 @@ button {
     flex-wrap: wrap;
     justify-content: space-between;
 
-    @media (min-width: 768px) {
-        margin-bottom: 1rem;
-    }
+    // @media (min-width: 768px) {
+    //     margin-bottom: 1rem;
+    // }
 
     .hole {
         display: flex;
@@ -152,6 +152,7 @@ button {
 
         @media (min-width: 768px) {
             height: 100px;
+            width: 30%;
             margin-bottom: 3rem;
         }
 
