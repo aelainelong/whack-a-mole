@@ -1,4 +1,4 @@
-## Whack-A-Mole
+# Whack-A-Mole
 
 A simple whack-a-mole style game built using vanilla JavaScript, HTML5 and CSS. 
 
