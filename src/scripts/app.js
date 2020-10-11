@@ -22,9 +22,7 @@ const app = (function(){
     const minDelay = 500; // min milliseconds to show a mole
     const maxDelay = 1500; // max milliseconds to show a mole
 
-    let currentMoles,
-        currentTimer,
-        currentHitCounter,
+    let game = {},
         prevHoleIndex;
 
     // Game utility methods
@@ -147,7 +145,7 @@ const app = (function(){
                     // Game Over!
                     running = false;
                     clearInterval(thisTimer);
-                    currentMoles.stop();
+                    game.moles.stop();
                     showEndModal();
                 }
                 timer.textContent = `00:${seconds < 10 ? `0${seconds}` : seconds}`;
@@ -179,24 +177,24 @@ const app = (function(){
     // Game events
 
     function startGame(e){
-        if (currentTimer.isRunning()) return;
+        if (game.timer.isRunning()) return;
         if (e) setActiveButton(e.target);
-        currentTimer.start();
-        currentMoles.start();
+        game.timer.start();
+        game.moles.start();
     }
 
     function stopGame(e){
-        if (!currentTimer.isRunning()) return;
+        if (!game.timer.isRunning()) return;
         if (e) setActiveButton(e.target);
-        currentTimer.stop();
-        currentMoles.stop();
+        game.timer.stop();
+        game.moles.stop();
     }
 
     function resetGame(e){
         if (e) setActiveButton(e.target);
-        currentTimer.reset();
-        currentHitCounter.reset();
-        currentMoles.reset();
+        game.timer.reset();
+        game.counter.reset();
+        game.moles.reset();
     }
 
     function showMole(hole) {
@@ -217,7 +215,7 @@ const app = (function(){
         // Vanquish the mole
         // Update the hit counter
         e.target.classList.remove("mole");
-        currentHitCounter.hit();
+        game.counter.hit();
     }
 
     function showEndModal() {
@@ -225,7 +223,7 @@ const app = (function(){
 
         document.body.classList.add("body--modal");
         modal.style.display = "block";
-        message.innerHTML = getResults(currentHitCounter.getHits(), currentMoles.getMoles());
+        message.innerHTML = getResults(game.counter.getHits(), game.moles.getMoles());
 
         setTimeout(() => {
             modal.classList.add("modal--open");
@@ -285,9 +283,9 @@ const app = (function(){
             }
 
             // Set up the moles, timer and hit counter
-            currentMoles = newMoles(holes, minDelay, maxDelay);
-            currentTimer = newTimer(timer, maxTime);
-            currentHitCounter = newHitCounter(hitCounter, 0);
+            game.moles = newMoles(holes, minDelay, maxDelay);
+            game.timer = newTimer(timer, maxTime);
+            game.counter = newHitCounter(hitCounter, 0);
 
             // Hook up our event listeners
             holes.forEach(hole => hole.addEventListener("click", hitMole));
