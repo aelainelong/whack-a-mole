@@ -35,5 +35,5 @@ npm run build
 - For simplicity, this was done as a single-file vanilla JS app. 
 - I used a more functional approach here, but the moles, timer and hit counter instances would easily convert to classes.
 - In a v2, I would port this into React and break everything out into separate modules and functional components.
-- This game is mobile-friendly, and also works in IE11+, Edge, Chrome, Firefox and Safari browsers.
+- This game is fully responsive, and also works in IE11+, Edge, Chrome, Firefox and Safari browsers.
 - The project was bootstrapped using [Webpack Frontend Starterkit](https://github.com/wbkd/webpack-starter).
