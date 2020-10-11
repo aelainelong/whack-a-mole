@@ -29,7 +29,7 @@ module.exports = merge(common, {
       },
       {
         test: /\.s?css/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader?url=false', 'sass-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader?url=false', 'postcss-loader', 'sass-loader'],
       },
     ],
   },
