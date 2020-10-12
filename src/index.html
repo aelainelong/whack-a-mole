@@ -9,36 +9,36 @@
 </head>
 <body>
     <header role="header">
-        <h1>Whack-a-Mole!</h1>
+        <h1 tabindex="0">Whack-a-Mole!</h1>
     </header>
     <div class="game" role="main">
         <div class="status">
-            <div class="timer">
+            <div class="timer" tabindex="0">
                 <h3 class="timer__label">Time Left</h3>
                 <span class="timer__value"></span>
             </div>
-            <div class="hits">
+            <div class="hits" tabindex="0">
                 <h3 class="hits__label">Total Hits</h3>
                 <span class="hits__value">0</span>
             </div>
-        </div>
-        <div class="holes">
-            <div class="hole"></div>
-            <div class="hole"></div>
-            <div class="hole"></div>
-            <div class="hole"></div>
-            <div class="hole"></div>
-            <div class="hole"></div>
-            <div class="hole"></div>
-            <div class="hole"></div>
-            <div class="hole"></div>
         </div>
         <div class="controls">
             <button class="button button--start" aria-label="Start Game">Start</button>
             <button class="button button--stop" aria-label="Stop Game">Stop</button>
             <button class="button button--reset" aria-label="Reset Game">Reset</button>
         </div>
-        <div class="modal">
+        <div class="holes">
+            <div class="hole" tabindex="0"></div>
+            <div class="hole" tabindex="0"></div>
+            <div class="hole" tabindex="0"></div>
+            <div class="hole" tabindex="0"></div>
+            <div class="hole" tabindex="0"></div>
+            <div class="hole" tabindex="0"></div>
+            <div class="hole" tabindex="0"></div>                                           
+            <div class="hole" tabindex="0"></div>
+            <div class="hole" tabindex="0"></div>
+        </div>
+        <div class="modal" tabindex="0">
             <div class="modal__wrap">
                 <h2>Game Over</h2>
                 <p class="message"></p>

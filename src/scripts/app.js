@@ -227,6 +227,7 @@ const app = (function(){
 
         setTimeout(() => {
             modal.classList.add("modal--open");
+            modal.focus();
         }, 700);
     }
 
@@ -238,6 +239,7 @@ const app = (function(){
         setTimeout(() => {
             modal.style.display = "none";
             document.body.classList.remove("body--modal");
+            document.querySelector(".game").focus();
         }, 500);
     }
 
@@ -277,6 +279,7 @@ const app = (function(){
 
                 setTimeout(() => {
                     errorModal.classList.add("modal--open");
+                    errorModal.focus();
                 }, 200);
 
                 return;
@@ -289,6 +292,10 @@ const app = (function(){
 
             // Hook up our event listeners
             holes.forEach(hole => hole.addEventListener("click", hitMole));
+            holes.forEach(hole => hole.addEventListener("keydown", e => { // add support for keyboard tabbing
+                if (e.which === 13 || e.which === 32) hitMole(e);
+            }));
+
             startButton.addEventListener("click", startGame);
             stopButton.addEventListener("click", stopGame);
             resetButton.addEventListener("click", resetGame);
